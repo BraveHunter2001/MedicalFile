@@ -1,0 +1,3 @@
+dotnet ef --project DAL --startup-project WebApi migrations add %Название миграции% -c MedicalFileContext //добавить миграцию
+
+dotnet ef --project DAL --startup-project WebApi database update //Применить
