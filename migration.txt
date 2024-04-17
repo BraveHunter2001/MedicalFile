@@ -1,3 +1,11 @@
-dotnet ef --project DAL --startup-project WebApi migrations add %Название миграции% -c MedicalFileContext //добавить миграцию
+// Если ты вносишь изменения в сущностях из Models, которые связаны с EF, 
+// то чтобы они применились нужно созадть миграцию
+// Это нужно чтобы у остальных разработчиков сопадала база данных
+// или если ты хочешь внести спощью sql данные, которые также отразились бы у всех разработчиков. Пример миграция AddPatinents
+// Создание миграции
+dotnet ef --project DAL --startup-project WebApi migrations add %Название миграции% -c MedicalFileContext 
 
-dotnet ef --project DAL --startup-project WebApi database update //Применить
+
+// После того как ты создал миграцию, нужно применить ее к базе данных
+//Применить миграции
+dotnet ef --project DAL --startup-project WebApi database update 
