@@ -6,7 +6,7 @@ public class Disease
     public string Symptoms { get; set; }
     public string Anamnesis { get; set; }
     public string Treatment { get; set; }
-    public int Pathophysiology { get;}
+    public string Pathophysiology { get;}
 
     public int PatientId { get; set; }
     public Patient Patient { get; set; }
