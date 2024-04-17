@@ -1,5 +1,6 @@
 ﻿using DAL.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 
 namespace DAL;
 
@@ -18,6 +19,9 @@ public class MedicalFileContext : DbContext
             .HasMany(p => p.Diseases)
             .WithOne(d => d.Patient)
             .HasForeignKey(d => d.PatientId);
+
+        builder.Entity<Patient>().Property(b => b.Id).UseIdentityAlwaysColumn();
+        builder.Entity<Disease>().Property(b => b.Id).UseIdentityAlwaysColumn();
 
         base.OnModelCreating(builder);
     }

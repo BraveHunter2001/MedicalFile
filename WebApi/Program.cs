@@ -1,5 +1,6 @@
 using DAL;
 using Microsoft.EntityFrameworkCore;
+using Services;
 
 namespace WebApi
 {
@@ -9,9 +10,8 @@ namespace WebApi
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddDbContext<MedicalFileContext>(
-                opt => opt.UseNpgsql("Server=localhost;Port=5432;Database=medicalFiles;User ID=pguser;Password=pgadmin;")
-            );
+            builder.Services.AddDAL();
+            builder.Services.AddServices();
 
             string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
             builder.Services.AddCors(options =>
