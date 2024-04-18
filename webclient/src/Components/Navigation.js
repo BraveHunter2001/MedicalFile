@@ -1,25 +1,34 @@
 import { Link } from "react-router-dom";
-import { Nav, NavItem, NavLink, Navbar, NavbarBrand } from "reactstrap";
+import {
+  Collapse,
+  Nav,
+  NavItem,
+  NavLink,
+  Navbar,
+  NavbarBrand,
+} from "reactstrap";
 
 const Navigation = () => {
   return (
-    <Navbar>
-      <NavbarBrand tag={Link} href="/">
-        MedicalFile
-      </NavbarBrand>
-      <Nav className="me-auto">
-        <NavItem>
-          <NavLink tag={Link} to="/patients">
-            Patients
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink tag={Link} to="/diseases">
-            Disease records
-          </NavLink>
-        </NavItem>
-      </Nav>
-    </Navbar>
+    <div>
+      <Navbar>
+        <NavbarBrand tag={Link} to="/">
+          MedicalFile
+        </NavbarBrand>
+        <Nav className="me-auto">
+          <NavItem>
+            <NavLink tag={Link} to="/patients" className="text-secondary">
+              Patients
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink tag={Link} to="/diseases" className="text-secondary">
+              Disease records
+            </NavLink>
+          </NavItem>
+        </Nav>
+      </Navbar>
+    </div>
   );
 };
 

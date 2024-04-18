@@ -5,16 +5,16 @@ import Diseases from "./Components/Diseases/Diseases";
 
 function App() {
   return (
-    <div className="App">
+    <>
       <Navigation />
-      <div className="container">
+      <div className="container p-2">
         <Routes>
           <Route path="/" element={<Patients />} />
           <Route path="/patients" element={<Patients />} />
           <Route path="/diseases" element={<Diseases />} />
         </Routes>
       </div>
-    </div>
+    </>
   );
 }
 
