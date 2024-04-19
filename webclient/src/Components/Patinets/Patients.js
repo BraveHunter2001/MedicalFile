@@ -1,4 +1,4 @@
-import { Button, Col, Row } from "reactstrap";
+import { Col, Row } from "reactstrap";
 import CustomTable from "../Table/CustomTable";
 import LoadingButton from "../Buttons/LoadingButton";
 import { useState } from "react";
@@ -72,7 +72,7 @@ const Patients = () => {
     setTimeout(() => {
       setPatients(mockItems);
       setIsLoading(false);
-    }, 4000);
+    }, 2000);
   };
 
   return (

@@ -1,13 +1,16 @@
 ﻿namespace DAL.Models;
 
-public class Disease
+public class DiseaseRecord
 {
     public int Id { get; set; }
+    public DateTime CreatedDate { get; set; }
     public string Symptoms { get; set; }
     public string Anamnesis { get; set; }
     public string Treatment { get; set; }
-    public string Pathophysiology { get;}
 
     public int PatientId { get; set; }
-    public Patient Patient { get; set; }
+    public User Patient { get; set; }
+
+    public int DoctorId { get; set; }
+    public User Doctor { get; set; }
 }
