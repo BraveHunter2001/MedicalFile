@@ -12,6 +12,8 @@ public class MedicalFileContext : DbContext
 
     public MedicalFileContext(DbContextOptions<MedicalFileContext> option) : base(option)
     {
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+        AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
     }
 
     protected override void OnModelCreating(ModelBuilder builder)

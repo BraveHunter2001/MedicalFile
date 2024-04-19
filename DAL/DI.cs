@@ -12,6 +12,8 @@ public static class DI
             opt => opt.UseNpgsql("Server=localhost;Port=5432;Database=medicalFiles;User ID=pguser;Password=pgadmin;")
         );
 
+        services.AddTransient<IPatientCharacteristicRepository, PatientCharacteristicRepository>();
+        services.AddTransient<IUserRepository, UserRepository>();
         
     }
 }
