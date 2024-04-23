@@ -26,6 +26,11 @@ const Navigation = () => {
               Disease records
             </NavLink>
           </NavItem>
+          <NavItem>
+            <NavLink tag={Link} to="/test" className="text-secondary">
+              Test
+            </NavLink>
+          </NavItem>
         </Nav>
       </Navbar>
     </div>
