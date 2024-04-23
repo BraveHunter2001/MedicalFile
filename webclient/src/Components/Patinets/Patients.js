@@ -89,7 +89,7 @@ const Patients = () => {
         />
       </Col>
       <Col>
-        <CustomTable headers={HEADERS} items={patients} hover={true} />
+        <CustomTable headers={HEADERS} items={patients} />
       </Col>
     </Row>
   );
