@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { AsyncTypeahead } from "react-bootstrap-typeahead";
 import { getAsync } from "../../axiosUtils";
+import { uniqueId } from "lodash-es";
 
 const SuggestTypeahead = ({
-  id,
   onSelected,
   labelKey,
   defaultOptions,
@@ -24,7 +24,7 @@ const SuggestTypeahead = ({
 
   return (
     <AsyncTypeahead
-      id={id}
+      id={uniqueId("typeahead")}
       isLoading={isLoading}
       labelKey={labelKey}
       onChange={onSelected}
