@@ -1,4 +1,5 @@
 ﻿using DAL.DTO;
+using DAL.Models;
 using Microsoft.AspNetCore.Mvc;
 using Services;
 
@@ -32,5 +33,12 @@ public class UsersController(IUserService userService) : ControllerBase
         int patientId = userService.CreateDoctor(doctor);
 
         return Ok(patientId);
+    }
+
+    [HttpGet]
+    public IActionResult GetUsers()
+    {
+        List<User> allUsers = userService.GetUsers();
+        return Ok(allUsers);
     }
 }

@@ -73,6 +73,7 @@ public class UserService(IUserRepository userRepository, IPatientCharacteristicR
 
     public List<User> GetUsers()
     {
-        throw new NotImplementedException();
+        List<User> users = userRepository.GetUsers();
+        return users;
     }
 }
