@@ -14,6 +14,7 @@ public interface IUserService
 
     User GetUser();
     List<User> GetUsers();
+    List<User> GetUsers(UserFilter filter);
 }
 
 public class UserService(IUserRepository userRepository, IPatientCharacteristicRepository patientCharacteristicRepository) : IUserService
@@ -73,7 +74,13 @@ public class UserService(IUserRepository userRepository, IPatientCharacteristicR
 
     public List<User> GetUsers()
     {
-        List<User> users = userRepository.GetUsers();
+        List<User> users = userRepository.GetUsers(null);
+        return users;
+    }
+
+    public List<User> GetUsers(UserFilter filter)
+    {
+        List<User> users = userRepository.GetUsers(filter);
         return users;
     }
 }

@@ -2,6 +2,7 @@
 using DAL.Models;
 using Microsoft.AspNetCore.Mvc;
 using Services;
+using System.Numerics;
 
 namespace WebApi.Controllers;
 
@@ -40,5 +41,21 @@ public class UsersController(IUserService userService) : ControllerBase
     {
         List<User> allUsers = userService.GetUsers();
         return Ok(allUsers);
+    }
+
+    [HttpGet("doctors")]
+    public IActionResult GetDoctors([FromBody] UserFilter userFilter)
+    {
+        userFilter.Role = Role.Doctor;
+        List<User> doctors = userService.GetUsers(userFilter);
+        return Ok(doctors);
+    }
+
+    [HttpGet("patients")]
+    public IActionResult GetPatients([FromBody] UserFilter userFilter)
+    {
+        userFilter.Role = Role.Patient;
+        List<User> patients = userService.GetUsers(userFilter);
+        return Ok(patients);
     }
 }
