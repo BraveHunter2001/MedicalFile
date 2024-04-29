@@ -26,13 +26,6 @@ namespace DAL.Repositories
                 && (string.IsNullOrWhiteSpace(filter.Name)
                 || user.Name.StartsWith(filter.Name)))));
 
-                /*filter == null
-                || filter.Role == null
-                || user.Role == filter.Role) 
-                && (filter == null
-                || string.IsNullOrWhiteSpace(filter.Name)
-                || user.Name.StartsWith(filter.Name))*/
-
             var result = 
                 filter?.Take is not null 
                 ? allUsers.Take(filter.Take.Value) 
