@@ -2,7 +2,6 @@
 using DAL.Models;
 using Microsoft.AspNetCore.Mvc;
 using Services;
-using System.Numerics;
 
 namespace WebApi.Controllers;
 
@@ -39,6 +38,7 @@ public class UsersController(IUserService userService) : ControllerBase
     [HttpGet]
     public IActionResult GetUsers()
     {
+        // Ебни вывод по Take
         List<User> allUsers = userService.GetUsers();
         return Ok(allUsers);
     }

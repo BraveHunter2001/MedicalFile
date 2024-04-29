@@ -1,6 +1,5 @@
 ﻿using DAL.DTO;
 using DAL.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories
 {
@@ -22,15 +21,22 @@ namespace DAL.Repositories
         {
             var allUsers = context.Users.Where(user
                 => (filter == null
+                || ((filter.Role == null
+                || user.Role == filter.Role)
+                && (string.IsNullOrWhiteSpace(filter.Name)
+                || user.Name.StartsWith(filter.Name)))));
+
+                /*filter == null
                 || filter.Role == null
                 || user.Role == filter.Role) 
                 && (filter == null
-                || filter.Name == null
-                || filter.Name == " "
-                || user.Name.StartsWith(filter.Name)));
+                || string.IsNullOrWhiteSpace(filter.Name)
+                || user.Name.StartsWith(filter.Name))*/
 
-            var result = filter != null ? (filter.Take.HasValue
-                ? allUsers.Take(filter.Take.Value) : allUsers) : allUsers;
+            var result = 
+                filter?.Take is not null 
+                ? allUsers.Take(filter.Take.Value) 
+                : allUsers;
 
             return result.ToList();
         }
