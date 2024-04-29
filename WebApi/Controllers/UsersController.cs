@@ -38,7 +38,24 @@ public class UsersController(IUserService userService) : ControllerBase
     [HttpGet]
     public IActionResult GetUsers()
     {
+        // Ебни вывод по Take
         List<User> allUsers = userService.GetUsers();
         return Ok(allUsers);
+    }
+
+    [HttpGet("doctors")]
+    public IActionResult GetDoctors([FromBody] UserFilter userFilter)
+    {
+        userFilter.Role = Role.Doctor;
+        List<User> doctors = userService.GetUsers(userFilter);
+        return Ok(doctors);
+    }
+
+    [HttpGet("patients")]
+    public IActionResult GetPatients([FromBody] UserFilter userFilter)
+    {
+        userFilter.Role = Role.Patient;
+        List<User> patients = userService.GetUsers(userFilter);
+        return Ok(patients);
     }
 }
