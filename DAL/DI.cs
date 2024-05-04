@@ -14,6 +14,7 @@ public static class DI
 
         services.AddTransient<IPatientCharacteristicRepository, PatientCharacteristicRepository>();
         services.AddTransient<IUserRepository, UserRepository>();
+        services.AddTransient<IDiseaseRepository, DiseaseRepository>();
         
     }
 }

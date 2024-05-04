@@ -7,5 +7,6 @@ public static class DI
     public static void AddServices(this IServiceCollection services)
     {
         services.AddTransient<IUserService, UserService>();
+        services.AddTransient<IDiseaseService, DiseaseService>();
     }
 }
