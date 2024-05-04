@@ -1,6 +1,7 @@
-import React from "react";
-import { MODEL_MODE, getSuggestUrl } from "../../constants";
+import React, { useState } from "react";
+import { MODEL_MODE, ROLE, getSuggestUrl } from "../../constants";
 import {
+  Alert,
   Button,
   Col,
   Form,
@@ -13,6 +14,7 @@ import {
 import { FormikInput } from "../Formik/FormikInput";
 import { Formik } from "formik";
 import { FormikSuggestTypeahead } from "../Formik/FormikSuggestTypeahead";
+import { postAsync } from "../../axiosUtils";
 
 const initialValues = {
   doctor: null,
@@ -22,24 +24,34 @@ const initialValues = {
   treatment: "",
 };
 
-const colClassName = "mb-3";
-
 const DiseaseModel = ({ isOpen, onClose, mode }) => {
-  const handleSubmit = (values) => {
+  const [showAlert, setShowAlert] = useState(false);
+
+  const handleSubmit = async (values) => {
     const modal = {
       ...values,
       doctorId: values.doctor.id,
-      patinetId: values.patient.id,
+      patientId: values.patient.id,
     };
 
-    console.log("handleSubmit values", values);
-    console.log("handleSubmit modal", modal);
+    const { isOk, data } = await postAsync("api/diseases", modal);
+    setShowAlert(isOk);
+  };
+
+  const handleClose = () => {
+    setShowAlert(false);
+    onClose?.();
   };
 
   const isDisabled = mode === MODEL_MODE.View;
   return (
-    <Modal isOpen={isOpen} toggle={onClose}>
-      <ModalHeader toggle={onClose}>DiseaseModel</ModalHeader>
+    <Modal isOpen={isOpen} toggle={handleClose}>
+      <ModalHeader toggle={handleClose}>DiseaseModel</ModalHeader>
+      {showAlert && (
+        <Alert color="success" className="m-2">
+          Disease record successfuly created
+        </Alert>
+      )}
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
         {(props) => {
           const { submitForm } = props;
@@ -52,7 +64,9 @@ const DiseaseModel = ({ isOpen, onClose, mode }) => {
                       <FormikSuggestTypeahead
                         labelKey={"name"}
                         name="doctor"
-                        buildQuery={(query) => getSuggestUrl(query)}
+                        buildQuery={(query) =>
+                          getSuggestUrl(query, ROLE.Doctor)
+                        }
                         disabled={isDisabled}
                         placeholder="Doctor"
                       />
@@ -61,7 +75,9 @@ const DiseaseModel = ({ isOpen, onClose, mode }) => {
                       <FormikSuggestTypeahead
                         labelKey={"name"}
                         name="patient"
-                        buildQuery={(query) => getSuggestUrl(query)}
+                        buildQuery={(query) =>
+                          getSuggestUrl(query, ROLE.Patient)
+                        }
                         disabled={isDisabled}
                         placeholder="Patient"
                       />
