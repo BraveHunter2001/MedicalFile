@@ -1,6 +1,14 @@
 import { Form, Formik } from "formik";
-import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
-import { FormikInput } from "../Formik/FormikInput";
+import {
+  Button,
+  Col,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+  Row,
+} from "reactstrap";
+import { FloatingInput, FormikInput } from "../Formik/FormikInput";
 import { FormikSuggestTypeahead } from "../Formik/FormikSuggestTypeahead";
 
 const initValue = { name: "" };
@@ -18,16 +26,37 @@ export const TestModal = ({ isOpen, onClose }) => {
             <>
               <ModalBody>
                 <Form>
-                  <FormikInput name="name" label={"Name"} floating />
-                  <FormikSuggestTypeahead
-                    labelKey={"name"}
-                    name="people"
-                    buildQuery={(query) => `api/test/suggests?query=${query}`}
-                  />
+                  <Row xs="12">
+                    <Col sm="6">
+                      <FormikInput name="name" label={"Name"} floating />
+                    </Col>
+                    <Col sm="6">
+                      <FormikInput name="login" label={"login"} floating />
+                    </Col>
+                  </Row>
+                  <Row xs="12">
+                    <Col sm="6">
+                      <FormikInput
+                        name="test3"
+                        label={"I am disabled field"}
+                        floating
+                        disabled
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <FormikSuggestTypeahead
+                      labelKey={"name"}
+                      name="people"
+                      buildQuery={(query) => `api/test/suggests?query=${query}`}
+                    />
+                  </Row>
                 </Form>
               </ModalBody>
               <ModalFooter>
-                <Button onClick={submitForm}>Submit</Button>
+                <Button onClick={submitForm} color="primary">
+                  Submit
+                </Button>
               </ModalFooter>
             </>
           );
