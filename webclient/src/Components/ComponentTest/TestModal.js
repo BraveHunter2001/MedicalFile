@@ -26,20 +26,19 @@ export const TestModal = ({ isOpen, onClose }) => {
             <>
               <ModalBody>
                 <Form>
-                  <Row xs="12">
+                  <Row xs="12" className="mb-2">
                     <Col sm="6">
-                      <FormikInput name="name" label={"Name"} floating />
+                      <FormikInput name="name" label={"Name"} />
                     </Col>
                     <Col sm="6">
-                      <FormikInput name="login" label={"login"} floating />
+                      <FormikInput name="login" label={"login"} />
                     </Col>
                   </Row>
-                  <Row xs="12">
+                  <Row xs="12" className="mb-2">
                     <Col sm="6">
                       <FormikInput
                         name="test3"
                         label={"I am disabled field"}
-                        floating
                         disabled
                       />
                     </Col>
