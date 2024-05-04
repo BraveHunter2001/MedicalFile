@@ -38,7 +38,7 @@ public class UsersController(IUserService userService) : ControllerBase
     [HttpGet]
     public IActionResult GetUsers()
     {
-        // Ебни вывод по Take
+        //todo: Ебни вывод по Take
         List<User> allUsers = userService.GetUsers();
         return Ok(allUsers);
     }

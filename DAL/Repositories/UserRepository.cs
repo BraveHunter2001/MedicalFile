@@ -6,6 +6,7 @@ namespace DAL.Repositories
     public interface IUserRepository
     {
         int Add(User user);
+        bool UserExist(int id, Role role);
         List<User> GetUsers(UserFilter filter);
     }
 
@@ -15,6 +16,11 @@ namespace DAL.Repositories
         {
             Create(user);
             return user.Id;
+        }
+
+        public bool UserExist(int id, Role role)
+        {
+            return context.Users.Any(user => user.Id == id && user.Role == role);
         }
 
         public List<User> GetUsers(UserFilter filter)
