@@ -7,6 +7,7 @@ namespace Services
     public interface IDiseaseService
     {
         int CreateDiseaseRecord(DiseaseRecordModel diseaseRecordModel);
+        List<DiseaseRecord> GetDiseaseRecords(DiseaseFilterDTO diseaseFilterDTO);
     }
     public class DiseaseService(IDiseaseRepository diseaseRepository) : IDiseaseService
     {
@@ -24,6 +25,11 @@ namespace Services
 
             int diseaseId = diseaseRepository.Add(diseaseRecord);
             return diseaseId;
+        }
+
+        public List<DiseaseRecord> GetDiseaseRecords(DiseaseFilterDTO diseaseFilterDTO)
+        {
+            return diseaseRepository.GetDiseaseRecords(diseaseFilterDTO);
         }
     }
 }
