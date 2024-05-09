@@ -1,5 +1,6 @@
 ﻿using DAL.DTO;
 using DAL.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories
 {
@@ -32,12 +33,14 @@ namespace DAL.Repositories
                 && (string.IsNullOrWhiteSpace(filter.Name)
                 || user.Name.StartsWith(filter.Name)))));
 
-            var result = 
-                filter?.Take is not null 
-                ? allUsers.Take(filter.Take.Value) 
-                : allUsers;
+            var result = filter.Role == Role.Patient ? allUsers.Include(user => user.PatientCharacteristic) : allUsers;
 
-            return result.ToList();
+            var resultWithTake = 
+                filter?.Take is not null 
+                ? result.Take(filter.Take.Value) 
+                : result;
+
+            return resultWithTake.ToList();
         }
     }
 }

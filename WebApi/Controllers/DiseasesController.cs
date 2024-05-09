@@ -25,20 +25,8 @@ public class DiseasesController(IDiseaseService diseaseService, IUserService use
     public IActionResult GetDiseaseRecords([FromQuery] DiseaseFilterDTO diseaseFilterDTO)
     {
 
-        List<DiseaseRecordDTO> diseaseRecords = diseaseService.GetDiseaseRecords(diseaseFilterDTO).ConvertAll<DiseaseRecordDTO>(DiseaseRecordToDiseaseFilter);
+        List<DiseaseRecordDTO> diseaseRecords = diseaseService.GetDiseaseRecords(diseaseFilterDTO).ConvertAll(d => new DiseaseRecordDTO(d));
 
         return Ok(diseaseRecords);
-    }
-    public DiseaseRecordDTO DiseaseRecordToDiseaseFilter(DiseaseRecord diseaseRecord)
-    {
-        return new DiseaseRecordDTO
-        {
-            CreateDate = diseaseRecord.CreatedDate,
-            DoctorName = diseaseRecord.Doctor.Name,
-            PatientName = diseaseRecord.Patient.Name,
-            Symptoms = diseaseRecord.Symptoms,
-            Anamnesis = diseaseRecord.Anamnesis,
-            Treatment = diseaseRecord.Treatment,
-        };
     }
 }
