@@ -25,7 +25,7 @@ public class DiseasesController(IDiseaseService diseaseService, IUserService use
     public IActionResult GetDiseaseRecords([FromQuery] DiseaseFilterDTO diseaseFilterDTO)
     {
 
-        List<DiseaseRecordDTO> diseaseRecords = diseaseService.GetDiseaseRecords(diseaseFilterDTO).ConvertAll(u => new DiseaseRecordDTO(u));
+        List<DiseaseRecordDTO> diseaseRecords = diseaseService.GetDiseaseRecords(diseaseFilterDTO).ConvertAll(d => new DiseaseRecordDTO(d));
 
         return Ok(diseaseRecords);
     }
