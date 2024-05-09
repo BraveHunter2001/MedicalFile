@@ -29,7 +29,7 @@ public class DiseasesController(IDiseaseService diseaseService, IUserService use
 
         return Ok(diseaseRecords);
     }
-    public DiseaseRecordDTO DiseaseRecordToDiseaseFilter(DiseaseRecord diseaseRecord)
+    private DiseaseRecordDTO DiseaseRecordToDiseaseFilter(DiseaseRecord diseaseRecord)
     {
         return new DiseaseRecordDTO
         {

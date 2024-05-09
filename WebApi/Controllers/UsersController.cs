@@ -9,7 +9,6 @@ namespace WebApi.Controllers;
 [ApiController]
 public class UsersController(IUserService userService) : ControllerBase
 {
-
     [HttpPost("patients")]
     public IActionResult CreatePatient([FromBody] PatientModel patient)
     {
@@ -36,10 +35,11 @@ public class UsersController(IUserService userService) : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult GetUsers()
+    public IActionResult GetUsers([FromBody] UserFilter userFilter)
     {
-        //todo: Ебни вывод по Take
-        List<User> allUsers = userService.GetUsers();
+        userFilter.Name = null;
+        userFilter.Role = null;
+        List<User> allUsers = userService.GetUsers(userFilter);
         return Ok(allUsers);
     }
 
@@ -55,7 +55,11 @@ public class UsersController(IUserService userService) : ControllerBase
     public IActionResult GetPatients([FromBody] UserFilter userFilter)
     {
         userFilter.Role = Role.Patient;
+
         List<User> patients = userService.GetUsers(userFilter);
-        return Ok(patients);
+
+        List<PatientDTO> patientDTOs = patients.ConvertAll((User u) => new PatientDTO(u));
+
+        return Ok(patientDTOs);
     }
 }
