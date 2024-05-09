@@ -1,12 +1,13 @@
 import { useField } from "formik";
-import { FormGroup, Input, Label } from "reactstrap";
+import { Input } from "reactstrap";
 
-export const FormikInput = ({ label, floating, type, ...props }) => {
+export const FormikInput = ({ label, type, ...props }) => {
   const [field, meta, helpers] = useField(props);
   return (
-    <FormGroup floating={floating}>
-      <Input id={field.name} {...field} {...props} />
-      <Label for={field.name}>{label}</Label>
-    </FormGroup>
+    <Input id={field.name} placeholder={field.name} {...field} {...props} />
   );
+};
+
+export const FloatingInput = ({ name, label }) => {
+  return <Input id={name} name={name} placeholder={label} bsSize="sm" />;
 };

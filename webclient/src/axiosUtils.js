@@ -20,3 +20,6 @@ const invokeAsync = async (onSendRequest) => {
 
 export const getAsync = async (url) =>
   invokeAsync(async () => await axios.get(BACK_URL + url));
+
+export const postAsync = async (url, body) =>
+  invokeAsync(async () => await axios.post(BACK_URL + url, body));

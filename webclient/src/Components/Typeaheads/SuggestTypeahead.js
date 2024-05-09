@@ -8,6 +8,8 @@ const SuggestTypeahead = ({
   labelKey,
   defaultOptions,
   buildSuggestQuery,
+  disabled,
+  placeholder,
 }) => {
   const [options, setOptions] = useState(defaultOptions ?? []);
   const [isLoading, setIsLoading] = useState(false);
@@ -30,6 +32,8 @@ const SuggestTypeahead = ({
       onChange={onSelected}
       options={options}
       onSearch={handleSearch}
+      disabled={disabled}
+      placeholder={placeholder}
     />
   );
 };
