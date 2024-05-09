@@ -37,8 +37,6 @@ public class UsersController(IUserService userService) : ControllerBase
     [HttpGet]
     public IActionResult GetUsers([FromBody] UserFilter userFilter)
     {
-        userFilter.Name = null;
-        userFilter.Role = null;
         List<User> allUsers = userService.GetUsers(userFilter);
         return Ok(allUsers);
     }
@@ -58,7 +56,7 @@ public class UsersController(IUserService userService) : ControllerBase
 
         List<User> patients = userService.GetUsers(userFilter);
 
-        List<PatientDTO> patientDTOs = patients.ConvertAll((User u) => new PatientDTO(u));
+        List<PatientDTO> patientDTOs = patients.ConvertAll(u => new PatientDTO(u));
 
         return Ok(patientDTOs);
     }
