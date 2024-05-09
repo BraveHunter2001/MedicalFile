@@ -33,16 +33,16 @@ public class UsersController(IUserService userService) : ControllerBase
 
         return Ok(patientId);
     }
-
+    
     [HttpGet]
-    public IActionResult GetUsers([FromBody] UserFilter userFilter)
+    public IActionResult GetUsers([FromQuery] UserFilter userFilter)
     {
         List<User> allUsers = userService.GetUsers(userFilter);
         return Ok(allUsers);
     }
 
     [HttpGet("doctors")]
-    public IActionResult GetDoctors([FromBody] UserFilter userFilter)
+    public IActionResult GetDoctors([FromQuery] UserFilter userFilter)
     {
         userFilter.Role = Role.Doctor;
         List<User> doctors = userService.GetUsers(userFilter);
@@ -50,7 +50,7 @@ public class UsersController(IUserService userService) : ControllerBase
     }
 
     [HttpGet("patients")]
-    public IActionResult GetPatients([FromBody] UserFilter userFilter)
+    public IActionResult GetPatients([FromQuery] UserFilter userFilter)
     {
         userFilter.Role = Role.Patient;
 
