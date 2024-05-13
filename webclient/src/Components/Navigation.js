@@ -27,8 +27,8 @@ const Navigation = () => {
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink tag={Link} to="/test" className="text-secondary">
-              Test
+            <NavLink tag={Link} to="/doctors" className="text-secondary">
+              Doctors
             </NavLink>
           </NavItem>
         </Nav>
