@@ -54,7 +54,7 @@ const DiseaseModel = ({ isOpen, onClose, mode }) => {
       )}
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
         {(props) => {
-          const { submitForm } = props;
+          const { submitForm, values } = props;
           return (
             <>
               <ModalBody>
@@ -108,7 +108,11 @@ const DiseaseModel = ({ isOpen, onClose, mode }) => {
               </ModalBody>
               {!isDisabled && (
                 <ModalFooter>
-                  <Button onClick={submitForm} color="primary">
+                  <Button
+                    onClick={submitForm}
+                    color="primary"
+                    disabled={!values.doctor || !values.patient}
+                  >
                     Submit
                   </Button>
                 </ModalFooter>
