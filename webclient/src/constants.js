@@ -4,6 +4,7 @@ export const getSuggestUrl = (promt, role) =>
   `api/suggests/users/?query=${promt}&role=${role}`;
 
 export const GET_PATIENTS = "api/users/patients";
+export const GET_DOCTORS = "api/users/doctors";
 
 export const MODEL_MODE = {
   Edit: 0,

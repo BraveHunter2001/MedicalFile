@@ -33,6 +33,10 @@ const Patients = () => {
     setIsLoading(false);
   };
 
+  const handleAddPatient = () => {
+    console.log("AAddd");
+  };
+
   return (
     <Row className="flex-column">
       <Col className="pb-2 text-center">
@@ -44,6 +48,15 @@ const Patients = () => {
           isLoading={isLoading}
           classNameIcon={"me-1"}
           onClick={handleSubmitPatinet}
+        />
+        <LoadingButton
+          size="sm"
+          color="primary"
+          className="px-4 mx-2"
+          caption={"Add"}
+          //isLoading={isLoading}
+          classNameIcon={"me-1"}
+          onClick={handleAddPatient}
         />
       </Col>
       <Col>
