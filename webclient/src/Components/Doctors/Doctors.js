@@ -8,12 +8,13 @@ import { getAsync } from "../../axiosUtils";
 import { MODEL_MODE } from "../../constants";
 import { ROLE } from "../../constants";
 
-import DoctorsModal from "./DoctorsModal";
+import HumanModal from "../Formik/HumanModal";
 
 const HEADERS = [
   { title: "Name", name: "name" },
   { title: "Login", name: "login" },
 ];
+
 
 const Doctors = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -57,13 +58,13 @@ const Doctors = () => {
         />
       </Col>
       <Col>
-        <CustomTable headers={HEADERS} items={doctors} />
+        <CustomTable headers={HEADERS} items={doctors} role={ROLE.Doctor}/>
       </Col>
-      <DoctorsModal
+      <HumanModal
           isOpen={isOpenModal}
           onClose={() => setIsOpenModal(false)}
           mode={MODEL_MODE.Edit}
-          role={ROLE.Patient}
+          role={ROLE.Doctor}
         />
     </Row>
   );
