@@ -5,14 +5,21 @@ import { useState } from "react";
 import { GET_DOCTORS } from "../../constants";
 import { getAsync } from "../../axiosUtils";
 
+import { MODEL_MODE } from "../../constants";
+import { ROLE } from "../../constants";
+
+import HumanModal from "../Formik/HumanModal";
+
 const HEADERS = [
   { title: "Name", name: "name" },
   { title: "Login", name: "login" },
 ];
 
+
 const Doctors = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [doctors, setDoctors] = useState(null);
+  const [isOpenModal, setIsOpenModal] = useState(false);
 
   const handleSubmitDoctor = () => {
     setIsLoading(true);
@@ -25,7 +32,7 @@ const Doctors = () => {
   };
 
   const handleAddDoctor = () => {
-    setTimeout(() => {}, 2000);
+    setIsOpenModal(true);
   };
 
   return (
@@ -51,8 +58,14 @@ const Doctors = () => {
         />
       </Col>
       <Col>
-        <CustomTable headers={HEADERS} items={doctors} />
+        <CustomTable headers={HEADERS} items={doctors} role={ROLE.Doctor}/>
       </Col>
+      <HumanModal
+          isOpen={isOpenModal}
+          onClose={() => setIsOpenModal(false)}
+          mode={MODEL_MODE.Edit}
+          role={ROLE.Doctor}
+        />
     </Row>
   );
 };

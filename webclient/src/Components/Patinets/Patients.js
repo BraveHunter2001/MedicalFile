@@ -5,6 +5,12 @@ import { useState } from "react";
 import { getAsync } from "../../axiosUtils";
 import { GET_PATIENTS } from "../../constants";
 
+
+import { MODEL_MODE } from "../../constants";
+import { ROLE } from "../../constants";
+
+import HumanModal from "../Formik/HumanModal";
+
 const HEADERS = [
   { title: "Name", name: "name" },
   { title: "Age", name: "age" },
@@ -14,6 +20,7 @@ const HEADERS = [
 const Patients = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [patients, setPatients] = useState(null);
+  const [isOpenModal, setIsOpenModal] = useState(false);
 
   const handleSubmitPatinet = () => {
     setIsLoading(true);
@@ -34,7 +41,7 @@ const Patients = () => {
   };
 
   const handleAddPatient = () => {
-    console.log("AAddd");
+    setIsOpenModal(true);
   };
 
   return (
@@ -60,8 +67,14 @@ const Patients = () => {
         />
       </Col>
       <Col>
-        <CustomTable headers={HEADERS} items={patients} />
+        <CustomTable headers={HEADERS} items={patients} role={ROLE.Patient} />
       </Col>
+      <HumanModal
+          isOpen={isOpenModal}
+          onClose={() => setIsOpenModal(false)}
+          mode={MODEL_MODE.Edit}
+          role={ROLE.Patient}
+        />
     </Row>
   );
 };
