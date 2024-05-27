@@ -50,7 +50,7 @@ const HumanModal = ({ isOpen, onClose, mode, role, userId }) => {
     const modal = {
       ...values,
     };
-    const method = modal === MODEL_MODE.Add ? postAsync : patchAsync;
+    const method = mode === MODEL_MODE.Add ? postAsync : patchAsync;
     const { isOk, data } = await method(
       role === ROLE.Patient ? GET_PATIENTS : GET_DOCTORS,
       modal

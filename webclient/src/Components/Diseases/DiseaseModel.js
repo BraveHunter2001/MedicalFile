@@ -50,7 +50,7 @@ const DiseaseModel = ({ isOpen, onClose, mode, diseaseId }) => {
       patientId: values.patient.id,
     };
 
-    const method = modal === MODEL_MODE.Add ? postAsync : patchAsync;
+    const method = mode === MODEL_MODE.Add ? postAsync : patchAsync;
 
     const { isOk, data } = await method("api/diseases", modal);
     setShowAlert(isOk);
