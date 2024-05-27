@@ -9,7 +9,7 @@ public static class DI
     public static void AddDAL(this IServiceCollection services)
     {
         services.AddDbContext<MedicalFileContext>(
-            opt => opt.UseNpgsql("Server=localhost;Port=5432;Database=medicalFiles;User ID=pguser;Password=pgadmin;")
+            opt => opt.UseNpgsql("Server=postgres;Port=5432;Database=medicalFiles;User ID=pguser;Password=pgadmin;")
         );
 
         services.AddTransient<IPatientCharacteristicRepository, PatientCharacteristicRepository>();

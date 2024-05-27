@@ -1,4 +1,4 @@
-export const BACK_URL = "http://localhost:5220/";
+export const BACK_URL = "http://host.docker.internal:5000/";
 
 export const getSuggestUrl = (promt, role) =>
   `api/suggests/users/?query=${promt}&role=${role}`;

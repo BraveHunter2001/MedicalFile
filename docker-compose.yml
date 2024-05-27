@@ -36,6 +36,31 @@ services:
     networks:
         - dev
 
+  webapi:
+    container_name: webapi
+    image: ${DOCKER_REGISTRY-}webapi
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80 
+    ports:
+      - "5000:80"
+    networks:
+        - dev
+        
+  client:
+    container_name: client
+    image: ${DOCKER_REGISTRY-}client
+    build:
+      context: ./webclient
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+        - dev
+
 volumes:
     postgres:
     pgadmin:
