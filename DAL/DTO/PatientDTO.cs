@@ -4,6 +4,7 @@ namespace DAL.DTO;
 
 public class PatientDTO
 {
+    public int Id { get; set; }
     public string Name { get; set; }
     public string Login { get; set; }
     public string Password { get; set; }
@@ -11,6 +12,7 @@ public class PatientDTO
 
     public PatientDTO(User user)
     {
+        Id = user.Id;
         Name = user.Name;
         Login = user.Login;
         Password = user.Password;

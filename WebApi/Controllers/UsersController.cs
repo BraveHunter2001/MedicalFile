@@ -33,7 +33,7 @@ public class UsersController(IUserService userService) : ControllerBase
 
         return Ok(patientId);
     }
-    
+
     [HttpGet]
     public IActionResult GetUsers([FromQuery] UserFilter userFilter)
     {
@@ -59,5 +59,17 @@ public class UsersController(IUserService userService) : ControllerBase
         List<PatientDTO> patientDTOs = patients.ConvertAll(u => new PatientDTO(u));
 
         return Ok(patientDTOs);
+    }
+
+    [HttpGet("doctors/{id}")]
+    public IActionResult GetDoctor([FromRoute] int id)
+    {
+        return Ok(userService.GetUser(id));
+    }
+
+    [HttpGet("patients/{id}")]
+    public IActionResult GetPatient([FromRoute] int id)
+    {
+        return Ok(new PatientDTO(userService.GetUser(id)));
     }
 }

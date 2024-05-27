@@ -9,6 +9,7 @@ namespace DAL.Repositories
         int Add(User user);
         bool UserExist(int id, Role role);
         List<User> GetUsers(UserFilter filter);
+        User GetUser(int id);
     }
 
     public class UserRepository(MedicalFileContext context) : Repository<User>(context), IUserRepository
@@ -28,19 +29,26 @@ namespace DAL.Repositories
         {
             var allUsers = context.Users.Where(user
                 => (filter == null
-                || ((filter.Role == null
-                || user.Role == filter.Role)
-                && (string.IsNullOrWhiteSpace(filter.Name)
-                || user.Name.StartsWith(filter.Name)))));
+                    || ((filter.Role == null
+                         || user.Role == filter.Role)
+                        && (string.IsNullOrWhiteSpace(filter.Name)
+                            || user.Name.StartsWith(filter.Name)))));
 
             var result = filter.Role == Role.Patient ? allUsers.Include(user => user.PatientCharacteristic) : allUsers;
 
-            var resultWithTake = 
-                filter?.Take is not null 
-                ? result.Take(filter.Take.Value) 
-                : result;
+            var resultWithTake =
+                filter?.Take is not null
+                    ? result.Take(filter.Take.Value)
+                    : result;
 
             return resultWithTake.ToList();
+        }
+
+        public User GetUser(int id)
+        {
+            return context.Users
+                .Include(u=>u.PatientCharacteristic)
+                .FirstOrDefault(u=>u.Id == id);
         }
     }
 }

@@ -14,7 +14,7 @@ public interface IUserService
 
     bool UserExist(int id, Role role);
 
-    User GetUser();
+    User GetUser(int id);
     List<User> GetUsers(UserFilter filter);
 }
 
@@ -73,9 +73,9 @@ public class UserService(IUserRepository userRepository, IPatientCharacteristicR
         return userRepository.UserExist(id, role);
     }
 
-    public User GetUser()
+    public User GetUser(int id)
     {
-        throw new NotImplementedException();
+        return userRepository.GetUser(id);
     }
 
     public List<User> GetUsers(UserFilter filter)

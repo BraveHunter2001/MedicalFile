@@ -15,11 +15,12 @@ const HEADERS = [
   { title: "Login", name: "login" },
 ];
 
-
 const Doctors = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [doctors, setDoctors] = useState(null);
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [doctorId, setDoctorId] = useState(null);
+  const [modalType, setModalType] = useState(MODEL_MODE.View);
 
   const handleSubmitDoctor = () => {
     setIsLoading(true);
@@ -33,6 +34,13 @@ const Doctors = () => {
 
   const handleAddDoctor = () => {
     setIsOpenModal(true);
+    setModalType(MODEL_MODE.Add);
+  };
+
+  const handleView = (itemId) => {
+    setDoctorId(itemId);
+    setIsOpenModal(true);
+    setModalType(MODEL_MODE.View);
   };
 
   return (
@@ -58,14 +66,20 @@ const Doctors = () => {
         />
       </Col>
       <Col>
-        <CustomTable headers={HEADERS} items={doctors} role={ROLE.Doctor}/>
+        <CustomTable
+          headers={HEADERS}
+          items={doctors}
+          role={ROLE.Doctor}
+          onViewItem={handleView}
+        />
       </Col>
       <HumanModal
-          isOpen={isOpenModal}
-          onClose={() => setIsOpenModal(false)}
-          mode={MODEL_MODE.Edit}
-          role={ROLE.Doctor}
-        />
+        userId={doctorId}
+        isOpen={isOpenModal}
+        onClose={() => setIsOpenModal(false)}
+        mode={modalType}
+        role={ROLE.Doctor}
+      />
     </Row>
   );
 };

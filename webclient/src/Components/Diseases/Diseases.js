@@ -83,11 +83,11 @@ const Diseases = () => {
         />
       </Col>
       <DiseaseModel
-        isOpen={isShowDiseaseModal && diseaseId !== null}
+        isOpen={isShowDiseaseModal}
         onClose={() => {
           getDiseases();
           setIsShowDiseaseModal(false);
-          setDiseaseId();
+          setDiseaseId(null);
         }}
         mode={modalType}
         diseaseId={diseaseId}
