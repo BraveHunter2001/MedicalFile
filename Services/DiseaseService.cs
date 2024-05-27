@@ -8,7 +8,12 @@ namespace Services
     {
         int CreateDiseaseRecord(DiseaseRecordModel diseaseRecordModel);
         List<DiseaseRecord> GetDiseaseRecords(DiseaseFilterDTO diseaseFilterDTO);
+
+        DiseaseRecord GetDiseaseRecord(int id);
+
+        int PatchDiseaseRecord(DiseaseRecordModel record);
     }
+
     public class DiseaseService(IDiseaseRepository diseaseRepository) : IDiseaseService
     {
         public int CreateDiseaseRecord(DiseaseRecordModel diseaseRecordModel)
@@ -30,6 +35,25 @@ namespace Services
         public List<DiseaseRecord> GetDiseaseRecords(DiseaseFilterDTO diseaseFilterDTO)
         {
             return diseaseRepository.GetDiseaseRecords(diseaseFilterDTO);
+        }
+
+        public DiseaseRecord GetDiseaseRecord(int id) => diseaseRepository.GetDisease(id);
+
+        public int PatchDiseaseRecord(DiseaseRecordModel record)
+        {
+            var origin = GetDiseaseRecord(record.Id);
+
+            if (origin is null) return 0;
+
+            origin.DoctorId = record.DoctorId;
+            origin.PatientId = record.PatientId;
+            origin.Anamnesis = record.Anamnesis;
+            origin.Treatment = record.Treatment;
+            origin.Symptoms = record.Symptoms;
+
+            diseaseRepository.Update(origin);
+
+            return origin.Id;
         }
     }
 }

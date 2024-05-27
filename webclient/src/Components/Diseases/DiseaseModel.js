@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { MODEL_MODE, ROLE, getSuggestUrl } from "../../constants";
+import React, { useEffect, useState } from "react";
+import { GET_DISEASE, MODEL_MODE, ROLE, getSuggestUrl } from "../../constants";
 import {
   Alert,
   Button,
@@ -14,7 +14,7 @@ import {
 import { FormikInput } from "../Formik/FormikInput";
 import { Formik } from "formik";
 import { FormikSuggestTypeahead } from "../Formik/FormikSuggestTypeahead";
-import { postAsync } from "../../axiosUtils";
+import { getAsync, patchAsync, postAsync } from "../../axiosUtils";
 
 const initialValues = {
   doctor: null,
@@ -24,8 +24,24 @@ const initialValues = {
   treatment: "",
 };
 
-const DiseaseModel = ({ isOpen, onClose, mode }) => {
+const DiseaseModel = ({ isOpen, onClose, mode, diseaseId }) => {
   const [showAlert, setShowAlert] = useState(false);
+  const [disease, setDisease] = useState(null);
+
+  useEffect(() => {
+    if (!diseaseId || diseaseId === null) return;
+
+    (async () => {
+      const { isOk, data } = await getAsync(GET_DISEASE + `/${diseaseId}`);
+      isOk &&
+        data &&
+        setDisease({
+          ...data,
+          doctor: { name: data.doctorName, id: data.doctorId },
+          patient: { name: data.patientName, id: data.patientId },
+        });
+    })();
+  }, [isOpen, diseaseId]);
 
   const handleSubmit = async (values) => {
     const modal = {
@@ -34,16 +50,20 @@ const DiseaseModel = ({ isOpen, onClose, mode }) => {
       patientId: values.patient.id,
     };
 
-    const { isOk, data } = await postAsync("api/diseases", modal);
+    const method = modal === MODEL_MODE.Add ? postAsync : patchAsync;
+
+    const { isOk, data } = await method("api/diseases", modal);
     setShowAlert(isOk);
   };
 
   const handleClose = () => {
     setShowAlert(false);
+    disease && setDisease(null);
     onClose?.();
   };
 
   const isDisabled = mode === MODEL_MODE.View;
+  const curInitialValues = disease ?? initialValues;
   return (
     <Modal isOpen={isOpen} toggle={handleClose}>
       <ModalHeader toggle={handleClose}>DiseaseModel</ModalHeader>
@@ -52,7 +72,11 @@ const DiseaseModel = ({ isOpen, onClose, mode }) => {
           Disease record successfuly created
         </Alert>
       )}
-      <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+      <Formik
+        initialValues={curInitialValues}
+        onSubmit={handleSubmit}
+        enableReinitialize
+      >
         {(props) => {
           const { submitForm, values } = props;
           return (
@@ -113,7 +137,7 @@ const DiseaseModel = ({ isOpen, onClose, mode }) => {
                     color="primary"
                     disabled={!values.doctor || !values.patient}
                   >
-                    Submit
+                    {mode === MODEL_MODE.Add ? "Submit" : "Edit"}
                   </Button>
                 </ModalFooter>
               )}

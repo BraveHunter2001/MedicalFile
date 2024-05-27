@@ -1,7 +1,7 @@
 import { Col, Row, Container } from "reactstrap";
 import CustomTable from "../Table/CustomTable";
 import LoadingButton from "../Buttons/LoadingButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GET_DISEASE, MODEL_MODE } from "../../constants";
 import { getAsync } from "../../axiosUtils";
 import DiseaseModel from "./DiseaseModel";
@@ -20,6 +20,7 @@ const Diseases = () => {
   const [isShowDiseaseModal, setIsShowDiseaseModal] = useState(false);
   const [modalType, setModalType] = useState(MODEL_MODE.View);
   const [diseases, setDiseases] = useState(null);
+  const [diseaseId, setDiseaseId] = useState();
 
   const getDiseases = async () => {
     const { isOk, data } = await getAsync(GET_DISEASE);
@@ -35,6 +36,18 @@ const Diseases = () => {
   };
 
   const handleAddDiseas = () => {
+    setIsShowDiseaseModal(true);
+    setModalType(MODEL_MODE.Add);
+  };
+
+  const handleView = (itemId) => {
+    setDiseaseId(itemId);
+    setIsShowDiseaseModal(true);
+    setModalType(MODEL_MODE.View);
+  };
+
+  const handleEdit = (itemId) => {
+    setDiseaseId(itemId);
     setIsShowDiseaseModal(true);
     setModalType(MODEL_MODE.Edit);
   };
@@ -62,15 +75,22 @@ const Diseases = () => {
         />
       </Col>
       <Col>
-        <CustomTable headers={HEADERS} items={diseases} />
+        <CustomTable
+          headers={HEADERS}
+          items={diseases}
+          onViewItem={handleView}
+          onEditItem={handleEdit}
+        />
       </Col>
       <DiseaseModel
-        isOpen={isShowDiseaseModal}
+        isOpen={isShowDiseaseModal && diseaseId !== null}
         onClose={() => {
           getDiseases();
           setIsShowDiseaseModal(false);
+          setDiseaseId();
         }}
         mode={modalType}
+        diseaseId={diseaseId}
       />
     </Row>
   );

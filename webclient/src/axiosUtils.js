@@ -23,3 +23,6 @@ export const getAsync = async (url) =>
 
 export const postAsync = async (url, body) =>
   invokeAsync(async () => await axios.post(BACK_URL + url, body));
+
+export const patchAsync = async (url, body) =>
+  invokeAsync(async () => await axios.patch(BACK_URL + url, body));

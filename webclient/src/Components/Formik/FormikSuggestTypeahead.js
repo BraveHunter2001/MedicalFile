@@ -11,6 +11,7 @@ export const FormikSuggestTypeahead = ({ labelKey, buildQuery, ...props }) => {
 
   return (
     <SuggestTypeahead
+      defaultSelected={field?.value ? [field?.value] : null}
       labelKey={labelKey}
       buildSuggestQuery={buildQuery}
       onSelected={handleSelected}

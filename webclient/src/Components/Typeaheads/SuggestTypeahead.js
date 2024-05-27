@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AsyncTypeahead } from "react-bootstrap-typeahead";
 import { getAsync } from "../../axiosUtils";
 import { uniqueId } from "lodash-es";
@@ -10,7 +10,9 @@ const SuggestTypeahead = ({
   buildSuggestQuery,
   disabled,
   placeholder,
+  defaultSelected,
 }) => {
+  const [selected, setSelected] = useState(defaultSelected);
   const [options, setOptions] = useState(defaultOptions ?? []);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -24,12 +26,22 @@ const SuggestTypeahead = ({
     setIsLoading(false);
   };
 
+  useEffect(() => {
+    setSelected(defaultSelected);
+  }, [defaultSelected]);
+
+  const handleSelected = (selected) => {
+    setSelected(selected);
+    onSelected?.(selected);
+  };
+
   return (
     <AsyncTypeahead
+      selected={selected}
       id={uniqueId("typeahead")}
       isLoading={isLoading}
       labelKey={labelKey}
-      onChange={onSelected}
+      onChange={handleSelected}
       options={options}
       onSearch={handleSearch}
       disabled={disabled}
