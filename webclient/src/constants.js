@@ -5,6 +5,7 @@ export const getSuggestUrl = (promt, role) =>
 
 export const GET_PATIENTS = "api/users/patients";
 export const GET_DOCTORS = "api/users/doctors";
+export const GET_DISEASE = "api/diseases";
 
 export const MODEL_MODE = {
   Edit: 0,
