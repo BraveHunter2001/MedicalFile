@@ -22,12 +22,16 @@ const Doctors = () => {
   const [doctorId, setDoctorId] = useState(null);
   const [modalType, setModalType] = useState(MODEL_MODE.View);
 
+  const getDoctors = async () => {
+    const { isOk, data } = await getAsync(GET_DOCTORS);
+    isOk && data && setDoctors(data);
+  };
+
   const handleSubmitDoctor = () => {
     setIsLoading(true);
 
     (async () => {
-      const { isOk, data } = await getAsync(GET_DOCTORS);
-      isOk && data && setDoctors(data);
+      await getDoctors();
     })();
     setIsLoading(false);
   };
@@ -41,6 +45,12 @@ const Doctors = () => {
     setDoctorId(itemId);
     setIsOpenModal(true);
     setModalType(MODEL_MODE.View);
+  };
+
+  const handleEdit = (itemId) => {
+    setDoctorId(itemId);
+    setIsOpenModal(true);
+    setModalType(MODEL_MODE.Edit);
   };
 
   return (
@@ -71,12 +81,17 @@ const Doctors = () => {
           items={doctors}
           role={ROLE.Doctor}
           onViewItem={handleView}
+          onEditItem={handleEdit}
         />
       </Col>
       <HumanModal
         userId={doctorId}
         isOpen={isOpenModal}
-        onClose={() => setIsOpenModal(false)}
+        onClose={() => {
+          setIsOpenModal(false);
+          setDoctorId(null);
+          getDoctors();
+        }}
         mode={modalType}
         role={ROLE.Doctor}
       />

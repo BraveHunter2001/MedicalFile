@@ -9,8 +9,8 @@ public interface IUserService
     int CreatePatient(PatientModel patient);
     int CreateDoctor(UserModel userModel);
 
-    int UpdatePatient();
-    int UpdateDoctor();
+    int UpdatePatient(PatientModel patientModel);
+    int UpdateDoctor(UserModel userModel);
 
     bool UserExist(int id, Role role);
 
@@ -58,14 +58,36 @@ public class UserService(IUserRepository userRepository, IPatientCharacteristicR
         return CreateUser(userModel);
     }
 
-    public int UpdatePatient()
+    public int UpdatePatient(PatientModel patient)
     {
-        throw new NotImplementedException();
+        if (patient is null) return 0;
+
+        var origin = GetUser(patient.Id);
+
+        origin.Name = patient.Name;
+        origin.Login = patient.Login;
+        origin.Password = patient.Password;
+        origin.PatientCharacteristic.Age = patient.Age;
+        origin.PatientCharacteristic.RiskFactor = patient.RiskFactor;
+
+        userRepository.UpdateUser(origin);
+
+        return origin.Id;
     }
 
-    public int UpdateDoctor()
+    public int UpdateDoctor(UserModel userModel)
     {
-        throw new NotImplementedException();
+        if (userModel is null) return 0;
+
+        var origin = GetUser(userModel.Id);
+
+        origin.Name = userModel.Name;
+        origin.Login = userModel.Login;
+        origin.Password = userModel.Password;
+
+        userRepository.UpdateUser(origin);
+
+        return origin.Id;
     }
 
     public bool UserExist(int id, Role role)

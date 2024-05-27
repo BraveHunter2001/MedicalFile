@@ -10,6 +10,7 @@ namespace DAL.Repositories
         bool UserExist(int id, Role role);
         List<User> GetUsers(UserFilter filter);
         User GetUser(int id);
+        void UpdateUser(User user);
     }
 
     public class UserRepository(MedicalFileContext context) : Repository<User>(context), IUserRepository
@@ -50,5 +51,7 @@ namespace DAL.Repositories
                 .Include(u=>u.PatientCharacteristic)
                 .FirstOrDefault(u=>u.Id == id);
         }
+
+        public void UpdateUser(User user) => Insert(user);
     }
 }

@@ -71,5 +71,34 @@ public class UsersController(IUserService userService) : ControllerBase
     public IActionResult GetPatient([FromRoute] int id)
     {
         return Ok(new PatientDTO(userService.GetUser(id)));
+
+    }
+
+
+    [HttpPatch("patients")]
+    public IActionResult PatchPatient([FromBody] PatientModel patient)
+    {
+
+        if (string.IsNullOrWhiteSpace(patient?.Login)) return BadRequest("Empty login");
+        if (string.IsNullOrWhiteSpace(patient.Password)) return BadRequest("Empty password");
+        if (string.IsNullOrWhiteSpace(patient.Name)) return BadRequest("Empty Name");
+        if (patient.Age <= 0) return BadRequest("Age must by non negative");
+
+        int patientId = userService.UpdatePatient(patient);
+
+        return Ok(patientId);
+    }
+
+    [HttpPatch("doctors")]
+    public IActionResult PatchDoctor([FromBody] UserModel doctor)
+    {
+
+        if (string.IsNullOrWhiteSpace(doctor?.Login)) return BadRequest("Empty login");
+        if (string.IsNullOrWhiteSpace(doctor.Password)) return BadRequest("Empty password");
+        if (string.IsNullOrWhiteSpace(doctor.Name)) return BadRequest("Empty Name");
+
+        int patientId = userService.UpdateDoctor(doctor);
+
+        return Ok(patientId);
     }
 }

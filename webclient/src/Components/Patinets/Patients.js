@@ -23,20 +23,24 @@ const Patients = () => {
   const [patientId, setPatientId] = useState(null);
   const [modalType, setModalType] = useState(MODEL_MODE.View);
 
+  const getPatients = async () => {
+    const { isOk, data } = await getAsync(GET_PATIENTS);
+    isOk &&
+      data &&
+      setPatients(
+        data?.map((d) => ({
+          id: d.id,
+          name: d.name,
+          age: d.patientCharacteristic.age,
+          riskFactor: d.patientCharacteristic.riskFactor,
+        }))
+      );
+  };
+
   const handleSubmitPatinet = () => {
     setIsLoading(true);
     (async () => {
-      const { isOk, data } = await getAsync(GET_PATIENTS);
-      isOk &&
-        data &&
-        setPatients(
-          data?.map((d) => ({
-            id: d.id,
-            name: d.name,
-            age: d.patientCharacteristic.age,
-            riskFactor: d.patientCharacteristic.riskFactor,
-          }))
-        );
+      await getPatients();
     })();
 
     setIsLoading(false);
@@ -51,6 +55,12 @@ const Patients = () => {
     setPatientId(itemId);
     setIsOpenModal(true);
     setModalType(MODEL_MODE.View);
+  };
+
+  const handleEdit = (itemId) => {
+    setPatientId(itemId);
+    setIsOpenModal(true);
+    setModalType(MODEL_MODE.Edit);
   };
 
   return (
@@ -81,6 +91,7 @@ const Patients = () => {
           items={patients}
           role={ROLE.Patient}
           onViewItem={handleView}
+          onEditItem={handleEdit}
         />
       </Col>
       <HumanModal
@@ -89,6 +100,7 @@ const Patients = () => {
         onClose={() => {
           setIsOpenModal(false);
           setPatientId(null);
+          getPatients();
         }}
         mode={modalType}
         role={ROLE.Patient}

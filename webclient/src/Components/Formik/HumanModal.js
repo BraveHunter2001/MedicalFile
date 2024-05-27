@@ -14,7 +14,7 @@ import {
 import { FormikInput } from "../Formik/FormikInput";
 import { Formik } from "formik";
 import { FormikSuggestTypeahead } from "../Formik/FormikSuggestTypeahead";
-import { getAsync, postAsync } from "../../axiosUtils";
+import { getAsync, patchAsync, postAsync } from "../../axiosUtils";
 
 const initialValues = {
   name: "",
@@ -50,8 +50,8 @@ const HumanModal = ({ isOpen, onClose, mode, role, userId }) => {
     const modal = {
       ...values,
     };
-
-    const { isOk, data } = await postAsync(
+    const method = modal === MODEL_MODE.Add ? postAsync : patchAsync;
+    const { isOk, data } = await method(
       role === ROLE.Patient ? GET_PATIENTS : GET_DOCTORS,
       modal
     );
