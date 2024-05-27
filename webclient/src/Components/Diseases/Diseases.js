@@ -2,8 +2,9 @@ import { Col, Row, Container } from "reactstrap";
 import CustomTable from "../Table/CustomTable";
 import LoadingButton from "../Buttons/LoadingButton";
 import { useState } from "react";
-import { GET_DISEASE } from "../../constants";
+import { GET_DISEASE, MODEL_MODE } from "../../constants";
 import { getAsync } from "../../axiosUtils";
+import DiseaseModel from "./DiseaseModel";
 
 const HEADERS = [
   { title: "CreateDate", name: "createDate" },
@@ -16,19 +17,26 @@ const HEADERS = [
 
 const Diseases = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [isShowDiseaseModal, setIsShowDiseaseModal] = useState(false);
+  const [modalType, setModalType] = useState(MODEL_MODE.View);
   const [diseases, setDiseases] = useState(null);
+
+  const getDiseases = async () => {
+    const { isOk, data } = await getAsync(GET_DISEASE);
+    isOk && data && setDiseases(data);
+  };
 
   const handleSubmitDiseas = () => {
     setIsLoading(true);
     (async () => {
-      const { isOk, data } = await getAsync(GET_DISEASE);
-      isOk && data && setDiseases(data);
+      await getDiseases();
       setIsLoading(false);
     })();
   };
 
   const handleAddDiseas = () => {
-    setTimeout(() => {}, 2000);
+    setIsShowDiseaseModal(true);
+    setModalType(MODEL_MODE.Edit);
   };
 
   return (
@@ -56,6 +64,14 @@ const Diseases = () => {
       <Col>
         <CustomTable headers={HEADERS} items={diseases} />
       </Col>
+      <DiseaseModel
+        isOpen={isShowDiseaseModal}
+        onClose={() => {
+          getDiseases();
+          setIsShowDiseaseModal(false);
+        }}
+        mode={modalType}
+      />
     </Row>
   );
 };
