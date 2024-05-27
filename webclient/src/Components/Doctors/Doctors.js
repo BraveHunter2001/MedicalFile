@@ -5,6 +5,11 @@ import { useState } from "react";
 import { GET_DOCTORS } from "../../constants";
 import { getAsync } from "../../axiosUtils";
 
+import { MODEL_MODE } from "../../constants";
+import { ROLE } from "../../constants";
+
+import DoctorsModal from "./DoctorsModal";
+
 const HEADERS = [
   { title: "Name", name: "name" },
   { title: "Login", name: "login" },
@@ -13,6 +18,7 @@ const HEADERS = [
 const Doctors = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [doctors, setDoctors] = useState(null);
+  const [isOpenModal, setIsOpenModal] = useState(false);
 
   const handleSubmitDoctor = () => {
     setIsLoading(true);
@@ -25,7 +31,7 @@ const Doctors = () => {
   };
 
   const handleAddDoctor = () => {
-    setTimeout(() => {}, 2000);
+    setIsOpenModal(true);
   };
 
   return (
@@ -53,6 +59,12 @@ const Doctors = () => {
       <Col>
         <CustomTable headers={HEADERS} items={doctors} />
       </Col>
+      <DoctorsModal
+          isOpen={isOpenModal}
+          onClose={() => setIsOpenModal(false)}
+          mode={MODEL_MODE.Edit}
+          role={ROLE.Patient}
+        />
     </Row>
   );
 };
